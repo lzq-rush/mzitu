@@ -12,12 +12,11 @@ class download():
     def __init__(self):
 
         self.iplist = [] ##初始化一个list用来存放我们获取到的IP
-        html = requests.get("http://haoip.cc/tiqu.htm")##不解释咯
+        html = requests.get("http://haoip.cc/tiqu.htm",timeout=3)##不解释咯
         iplistn = re.findall(r'r/>(.*?)<b', html.text, re.S) ##表示从html.text中获取所有r/><b中的内容，re.S的意思是包括匹配包括换行符，findall返回的是个list哦！
         for ip in iplistn:
             i = re.sub('\n', '', ip)##re.sub 是re模块替换的方法，这儿表示将\n替换为空
             self.iplist.append(i.strip()) ##添加到我们上面初始化的list里面, i.strip()的意思是去掉字符串的空格哦！！（这都不知道的小哥儿基础不牢啊）
-
 
 
         self.header_list =  [
@@ -78,4 +77,9 @@ class download():
                     else:
                         print(u'代理也不好使了！取消代理')
                         return self.get(url, 3)
+    def simple_get(self,url,timeout=3):
+        print(u'开始获取：', url)
+        UA = random.choice(self.header_list) ##从self.user_agent_list中随机取出一个字符串
+        headers = {'User-Agent': UA}  ##构造成一个完整的User-Agent （UA代表的是上面随机取出来的字符串哦）
+        return requests.get(url, headers=headers, timeout=timeout)
 request = download()

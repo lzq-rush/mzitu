@@ -13,13 +13,27 @@ from pymongo import MongoClient
 from multiprocessing import Process,Pool,Lock,cpu_count
 
 import datetime
+
+from weakref import WeakKeyDictionary as wd
 # reload(sys)
 # sys.setdefaultencoding('utf-8')
 
 
+class Url(object):
+    """A descriptor that forbids unreal url"""
+    def __init__(self,default):
+        self.default = default
+        self.data = Wd()
 
+    def __get__(self,instance,owner):
+        return self.data.get(instance,self.default)
 
-
+    def __set__(self,instance,value):
+        if value == None:
+            raise ValueError("url is None")
+        if len(value) < 5:
+            raise ValueError("url is not starnded : %s" % value)
+        self.data[instance] = value
 
 class Mongodb():
     def __init__(self,database):
@@ -32,6 +46,9 @@ class Mongodb():
 
 class mzitu():
     img_fold_url = u'D:\meizi'
+
+
+
     def __init__(self,col):
         self.mzitu_collection = col
         self.title=''
@@ -73,6 +90,8 @@ class mzitu():
         self.img_urls = []
 
     def img(self,page_url,max_span,page_num):
+
+        if page_url 
         img_html = request.get(page_url,3)
         try:
             img_url = BeautifulSoup(img_html.text,'lxml').find('div',class_="main-image").\

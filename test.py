@@ -9,7 +9,7 @@ from download import request
 
 from pymongo import MongoClient
 import os
-import time
+
 
 
 def img_download(img_url):
@@ -24,7 +24,7 @@ client = MongoClient()
 db = client['meinv']
 mzitu_collection = db['mzitu']
 
-href = 'http://www.mzitu.com/81086'
+href = 'http://www.mzitu.com/81196'
 
 results = mzitu_collection.find_one({'主题页面':href})
 
