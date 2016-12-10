@@ -9,7 +9,7 @@ from bs4 import BeautifulSoup
 
 # In[37]:
 
-response = request.simple_get('http://t66y.com/htm_data/16/1612/2159948.html')
+response = request.simple_get('url')
 
 
 # In[60]:
